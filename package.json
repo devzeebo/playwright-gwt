@@ -1,0 +1,35 @@
+{
+    "name": "@gwt/playwright",
+    "workspaces": [
+        "./example",
+        "./playwright-gwt"
+    ],
+    "scripts": {
+        "test": "wireit",
+        "test:report": "npx -w example playwright show-report",
+        "test:binding": "wireit"
+    },
+    "wireit": {
+        "test": {
+            "dependencies": [
+                "test:example",
+                "test:binding"
+            ]
+        },
+        "test:binding": {
+            "command": "npm -w playwright-gwt run test:coverage"
+        },
+        "test:example": {
+            "dependencies": [
+                "binding:build"
+            ],
+            "command": "npx -w example playwright test"
+        },
+        "binding:build": {
+            "command": "npm -w playwright-gwt run build"
+        }
+    },
+    "devDependencies": {
+        "wireit": "^0.14.4"
+    }
+}
